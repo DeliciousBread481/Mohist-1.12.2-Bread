@@ -250,6 +250,21 @@ public class MohistModuleManager {
                 throw new RuntimeException(throwable);
             }
         }))));
+        
+        // Add reads between extra modules themselves  
+        config.modules().forEach(rm -> ModuleLayer.boot().findModule(rm.name()).ifPresent(m ->  
+            config.modules().forEach(rm2 -> {  
+                if (!rm.name().equals(rm2.name())) {  
+                    ModuleLayer.boot().findModule(rm2.name()).ifPresent(m2 -> {  
+                        try {  
+                            implAddReadsMH.invokeWithArguments(m, m2);  
+                        } catch (Throwable throwable) {  
+                            throw new RuntimeException(throwable);  
+                        }  
+                    });  
+                }  
+            })  
+        ));
     }
 
     private record ParserData(String module, String packages, String target) {
