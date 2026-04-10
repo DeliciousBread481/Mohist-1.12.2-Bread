@@ -2,9 +2,9 @@ name: Build Mohist
   
 on:  
   push:  
-    branches: [ "1.20.1" ]  
+    branches: [ "1.20.1-bread" ]  
   pull_request:  
-    branches: [ "1.20.1" ]  
+    branches: [ "1.20.1-bread" ]  
   workflow_dispatch:  
   
 jobs:  
